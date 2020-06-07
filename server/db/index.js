@@ -28,6 +28,7 @@ Game.init(
     imagePath: DataTypes.STRING,
     comment: DataTypes.TEXT,
     system: DataTypes.STRING,
+    score: DataTypes.FLOAT,
     onYear: DataTypes.STRING
   },
   { sequelize, modelName: "game" }
@@ -49,7 +50,7 @@ Reply.init(
   { sequelize, modelName: "reply" }
 );
 
-Game.hasOne(GameType);
+Game.belongsTo(GameType);
 Reply.belongsTo(User,{as :'poster'});
 Reply.belongsTo(Game);
 Reply.hasOne(Reply,{as :'replyTo'});
