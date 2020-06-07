@@ -1,25 +1,65 @@
 <template>
   <div id="app">
-    <nav id="nav">
-      <div class="left">
+    <nav id="nav"   >
+      <el-col :xs="20" :sm="4" :md="4" :lg="4" :xl="4">
+        <div class="logo">
+          <!-- <img src="@/assets/logo.png" alt="Vue Logo" /> -->
+          <span class="title">{{ appTitle }}</span>
+        </div>
+      </el-col>
+      <!-- <div class="left">
         <div class="brand">
           <img src="@/assets/logo.png" alt="Vue Logo" />
           <span class="title">{{ appTitle }}</span>
-        </div>
-        <router-link to="/">Home</router-link>
+        </div> -->
+        <!-- <router-link to="/">Home</router-link>
         <router-link v-if="user !== null" to="/protected"
           >Protected</router-link
-        >
-      </div>
-      <div class="spacer"></div>
-      <div class="right">
+        > -->
+       
+      <!-- </div> -->
+      <el-col :xs="0" :sm="20" :md="20" :lg="20" :xl="20">
+        <el-menu 
+        default-active="activeIndex"
+            class="el-menu-demo hidden-xs-only nav-pc"
+            mode="horizontal"
+            @select="handleSelect"
+            background-color=teal
+            text-color=white
+            active-text-color="#fff">
+          <!-- <el-menu-item   index="1">Home</el-menu-item> -->
+          <el-menu-item index="1" class="iconfont icon-home"><router-link to="/">Home</router-link></el-menu-item>
+          <el-submenu index="2">
+            <template    slot="title">Pages</template>
+            <el-menu-item index="2-1">选项1</el-menu-item>
+            <el-menu-item index="2-2">选项2</el-menu-item>
+            <el-menu-item index="2-3">选项3</el-menu-item>
+          </el-submenu>
+          <el-submenu index="3">
+            <template  slot="title">Pages</template>
+            <el-menu-item index="3-1">选项1</el-menu-item>
+            <el-menu-item index="3-2">选项2</el-menu-item>
+            <el-menu-item index="3-3">选项3</el-menu-item>
+          </el-submenu>
+          <el-menu-item>
+            <router-link v-if="user !== null" to="/protected">Protected</router-link>
+          </el-menu-item>
+          <el-menu-item index="4"><router-link v-if="user === null" to="/login">Login</router-link></el-menu-item>
+          <el-menu-item index="5" vertical-align="top"><router-link v-if="user === null" to="/register">Register</router-link></el-menu-item>
+          <el-menu-item index="6" vertical-align="top" ><li v-if="user !== null"><a href="#" @click.prevent="doLogout">Logout</a></li></el-menu-item>
+          <el-menu-item index="6" vertical-align="top" ><li v-if="user !== null"><a href="#" @click.prevent="doLogout"></a>{{ user.username }}</li></el-menu-item>
+          <!-- <el-menu-item ><li v-if="user !== null">{{ user.username }}<a href="#" @click.prevent="doLogout">Logout</a></li></el-menu-item> -->
+        </el-menu>
+      </el-col>
+
+      <!-- <div class="spacer"></div> -->
+      <!-- <div class="right">
         <router-link v-if="user === null" to="/login">Login</router-link>
         <router-link v-if="user === null" to="/register">Register</router-link>
         <li v-if="user !== null">
-          <span class="title">{{ user.username }}</span>
           <a href="#" @click.prevent="doLogout">Logout</a>
         </li>
-      </div>
+      </div> -->
     </nav>
     <div class="content">
       <router-view />
@@ -32,7 +72,9 @@ export default {
   name: "App",
   data() {
     return {
-      appTitle: "MyApp"
+      appTitle: "MyApp",
+       activeIndex: '1',
+        activeIndex2: '1'
     };
   },
   computed: {
@@ -44,8 +86,14 @@ export default {
     doLogout() {
       this.$store.dispatch("LOG_OUT");
       this.$router.push({ name: "Home" });
-    }
-  },
+    },
+    
+    handleSelect(key, keyPath) {
+      console.log(key, keyPath);
+      }
+    
+  }
+  ,
   mounted() {
     document.title = this.appTitle;
   },
@@ -74,16 +122,19 @@ export default {
 }
 
 nav {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+  // display: flex;
+  // flex-direction: row;
+  // justify-content: space-between;
+  // align-items: center;
   padding: 16px 30px;
   background-color: teal;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
-  .spacer {
-    flex: 1;
-  }
+  // box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+  //  font-size: 1.2em;
+  // .spacer {
+  //   flex: 1;
+  // }
+
+  margin-bottom: 10px;
   .left {
     display: flex;
     flex-direction: row;
@@ -115,10 +166,40 @@ nav {
     font-weight: bold;
     color: white;
     margin-left: 24px;
+    list-style: none;
+    text-decoration: none;
 
     &.router-link-exact-active {
       color: #16db82;
     }
   }
 }
+.logo {
+    line-height: 40px;
+    font-size: 26px;
+    margin-left: 20px;
+  }
+.nav-pc {
+    border-bottom: none;
+     font-size: 26px;
+    margin:0 20px 0 0;
+    float: right;
+    > li {
+      padding: 0;
+      > a {
+        display: inline-block;
+        padding: 0 0px;
+        text-align: center;
+        > .iconfont {
+          vertical-align: top;
+          margin: 0 5px 0 0;
+        }
+      }
+    }
+  }
+
+.iconfont {
+          vertical-align: top;
+          margin: 0 5px 0 0;
+        }
 </style>
