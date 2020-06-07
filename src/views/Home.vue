@@ -1,12 +1,12 @@
 <template>
-  <div class="block">
+  <div class="block" id="banner">
     <span class="demonstration">showgames</span>
     <el-carousel height="450px">
       <el-carousel-item v-for="item in img_list" :key="item">
-        <img :src="item" alt="">
+        <img :src= "item" item alt=""  width=100%>
+        <!-- <img src="../../static/img/p1.png" width=100%>
         <img src="../../static/img/p1.png" width=100%>
-        <img src="../../static/img/p1.png" width=100%>
-        <img src="../../static/img/p1.png" width=100%> -->
+        <img src="../../static/img/p1.png" width=100%>  -->
         <!-- <h3>{{ item }}</h3> -->
       </el-carousel-item>
     </el-carousel>
@@ -30,13 +30,14 @@
 </template>
 <script>
   export default {
+    name: "Banner",
     data() {
       return {
           img_list:[
-              "../../static/img/p1.png",
-              "../../static/img/p1.png",
-              "../../static/img/p1.png",
-              "../../static/img/p1.png",
+             require("../../static/img/p1.png"),
+             require("../../static/img/p1.png"),
+             require("../../static/img/p1.png"),
+             require("../../static/img/p1.png"),
             ],
         // tableData:[]
         // tableData: [{
