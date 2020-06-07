@@ -10,7 +10,7 @@ User.init(
   {
     username: DataTypes.STRING,
     password: DataTypes.STRING,
-    fullname: DataTypes.STRING
+    lastLoginTime: DataTypes.DATE
   },
   {
     sequelize,
@@ -21,20 +21,47 @@ User.init(
   }
 );
 
-class Image extends Model {}
-Image.init(
+class Game extends Model {}
+Game.init(
   {
-    name: DataTypes.STRING,
-    fullpath: DataTypes.STRING,
-    thumbpath: DataTypes.STRING
+    gamename: DataTypes.STRING,
+    imagePath: DataTypes.STRING,
+    comment: DataTypes.TEXT,
+    system: DataTypes.STRING,
+    onYear: DataTypes.STRING
   },
-  { sequelize, modelName: "image" }
+  { sequelize, modelName: "game" }
 );
-Image.belongsTo(User);
+
+class GameType extends Model {}
+GameType.init(
+  {
+    gameTypeName: DataTypes.STRING
+  },
+  { sequelize, modelName: "gameType" }
+);
+
+class Reply extends Model {}
+Reply.init(
+  {
+    content: DataTypes.TEXT
+  },
+  { sequelize, modelName: "reply" }
+);
+
+Game.hasOne(GameType);
+Reply.belongsTo(User,{as :'poster'});
+Reply.belongsTo(Game);
+Reply.hasOne(Reply,{as :'replyTo'});
+Game.belongsToMany(User,{through: 'subscription', foreignKey: 'gameId'});
+User.belongsToMany(Game,{through: 'subscription', foreignKey: 'userId'});
+
 sequelize.sync();
 
 module.exports = {
   sequelize,
   User,
-  Image
+  Game,
+  GameType,
+  Reply
 };

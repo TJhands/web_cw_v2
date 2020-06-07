@@ -2,7 +2,7 @@
 const crypto = require("crypto");
 const Router = require("express").Router;
 const router = new Router();
-
+const sd = require("silly-datetime");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 
@@ -20,6 +20,16 @@ passport.use(
     User.findOne({ where: { username, password: hashpass } }).then(user => {
       if (user !== null) {
         done(null, user.toJSON());
+        User.update(
+          {
+            lastLoginTime: sd.format(new Date(), "YYYY-MM-DD HH:mm:ss")
+          },
+          {
+            where: {
+              username: user.username
+            }
+          }
+        );
       } else done(null, false, { message: "Incorrect username or password." });
     });
   })
@@ -35,7 +45,7 @@ router.post("/login", passport.authenticate("local"), (req, res, next) => {
   res.json(req.user);
 });
 router.post("/register", async (req, res) => {
-  let { username, password, fullname } = req.body;
+  let { username, password } = req.body;
   let hash = hashThis(password);
 
   // Check for user and create
@@ -46,7 +56,7 @@ router.post("/register", async (req, res) => {
       User.create({
         username,
         password: hash,
-        fullname
+        lastLoginTime: sd.format(new Date(), "YYYY-MM-DD HH:mm:ss")
       }).then(user => {
         req.login(user.toJSON(), () => {
           res.json(req.user);

@@ -16,6 +16,7 @@
         <router-link v-if="user === null" to="/login">Login</router-link>
         <router-link v-if="user === null" to="/register">Register</router-link>
         <li v-if="user !== null">
+          <span class="title">{{ user.username }}</span>
           <a href="#" @click.prevent="doLogout">Logout</a>
         </li>
       </div>

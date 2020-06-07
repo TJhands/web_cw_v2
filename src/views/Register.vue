@@ -5,12 +5,6 @@
       <form @submit.prevent="doRegister">
         <input
           type="text"
-          v-model="fullname"
-          placeholder="Full Name"
-          required
-        />
-        <input
-          type="text"
           v-model="username"
           placeholder="User Name"
           required
@@ -36,8 +30,7 @@ export default {
   data() {
     return {
       username: "",
-      password: "",
-      fullname: ""
+      password: ""
     };
   },
   computed: {
@@ -49,7 +42,6 @@ export default {
     doRegister() {
       this.$store
         .dispatch("REGISTER", {
-          fullname: this.fullname,
           username: this.username,
           password: this.password
         })
