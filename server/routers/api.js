@@ -104,8 +104,71 @@ router.get("/getGameCommentById/:id", async (req,res) =>{
 });
 
 //add favorate game to user
-router.get("/addFavorateGame", async (req,res) =>{
+router.post("/addFavoriteGame", async (req,res) =>{
+    let{userId, gameId} = req.body;
+    User.findOne({
+        where:{
+            id:userId
+        }
+    }).then(user =>{
+        Game.findOne({
+            where:{
+                id:gameId
+            }
+        }).then(game =>{
+            user.addGame(game)
+        })
+    })
+});
+router.post("/removeFavoriteGame", async (req,res) =>{
+    let{userId, gameId} = req.body;
+    User.findOne({
+        where:{
+            id:userId
+        }
+    }).then(user =>{
+        Game.findOne({
+            where:{
+                id:gameId
+            }
+        }).then(game =>{
+            user.removeGame(game)
+        })
+    })
+});
 
+router.post("/getFavoriteGamesByUser", async (req,res) =>{
+   let {userId} = req.body;
+   User.findOne({
+       where:{
+           id:userId
+       }
+   }).then(user =>{
+       user.getGames().then(games =>{
+           res.json(games)
+       })
+   })
+});
+
+router.post("/checkIsFavoriteGame", async (req,res) =>{
+    let {userId,gameId} = req.body;
+    User.findOne({
+        where:{
+            id:userId
+        }
+    }).then(user =>{
+        user.getGames({
+            where :{
+                id: gameId
+            }
+        }).then(game =>{
+            if (game !== null){
+                res.json({result:true})
+            } else{
+                res.json({result:false})
+            }
+        })
+    })
 });
 
 module.exports = router;
