@@ -32,7 +32,7 @@
 </template>
 <script>
   export default {
-    name: "Banner",
+    // name: "Banner",
     data() {
       return {
           // img_list:[

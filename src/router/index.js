@@ -7,10 +7,14 @@ import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
 import NotFound from "../views/NotFound.vue";
 import categories from "../views/categories.vue";
+import detail from "../views/detail.vue";
 import store from "@/store";
 
 import MyList from '../components/MyList';
 Vue.component(MyList.name, MyList);
+
+import comment from '../components/comment';
+Vue.component(comment.name, comment);
 
 Vue.use(VueRouter);
 function authcheck(to, from, next) {
@@ -34,9 +38,14 @@ const routes = [
   {
     path: "/categories",
     name: "categories",
-    beforeEnter: authcheck,
     component: categories,
     meta: { title: "categories" }
+  },
+  {
+    path: "/detail",
+    name: "detail",
+    component: detail,
+    meta: { title: "detail" }
   },
   {
     path: "/login",

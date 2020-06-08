@@ -11,7 +11,8 @@
     <ul>
       <li v-for="item in list" :key="item.id">
        
-        <router-link to="/">
+        <!-- <router-link to="/"> -->
+        <router-link :to="{ path: '/detail', query: {productID:item.id} }">
         <!-- <router-link :to="{ path: '/goods/details', query: {productID:item.product_id} }"> -->
          <img src="../../static/img/p1.png" width=100%>
           <!-- <img :src="require('../../static/img/'+item.url+'.png')" item alt=""  width=100%> -->
