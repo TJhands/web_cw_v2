@@ -16,21 +16,48 @@ router.get("/getFirstTenGames", async (req, res)=>{
     })
 });
 router.get("/getTypeGames", async (req,res) =>{
-    let { currentPage = 1 } = req.query;
-    let offset = (currentPage - 1) * 5;
     GameType.findAll({
         include:[
             {
                 model: Game,
-                limit: 5,
                 order: [['score','DESC']]
             }
         ],
-        offset,
-        limit:5
 
     }).then(gameTypes =>{
         res.json(gameTypes)
+    })
+});
+
+router.post("/getAllGames", async (req,res) =>{
+
+   let { currentPage = 1, pageSize } = req.body;
+   let offset = (currentPage - 1) * pageSize;
+   Game.findAll({
+       limit: pageSize,
+       offset: offset
+   }).then(games =>{
+       res.json(games)
+   })
+});
+router.post("/getAllGameTypes", async (req,res) =>{
+    GameType.findAll({
+    }).then(gametypes =>{
+        res.json(gametypes)
+    })
+});
+router.post("/getGamesByType", async (req,res) =>{
+    console.log(req.body);
+    let { gameTypeId, currentPage = 1, pageSize } = req.body;
+    let offset = (currentPage - 1) * pageSize;
+    Game.findAll({
+        where: {
+          gameTypeId:gameTypeId[0]
+        },
+        limit: pageSize,
+        offset: offset
+    }).then(games =>{
+        res.json(games)
     })
 });
 router.get("/getUserById/:id",async (req,res) =>{
