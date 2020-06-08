@@ -1,22 +1,22 @@
 <template>
-  <div>
+  <div class="goods" id="goods" name="goods">
    <div class="nav">
       <div class="product-nav">
         <div class="title">Game Categories</div>
         <el-tabs v-model="activeName" type="card">
           <el-tab-pane
             v-for="item in categoryList"
-            :key="item.category_id"
-            :label="item.category_name"
-            :name="''+item.category_id"
+            :key="item.id"
+            :label="item.gameTypeName"
+            :name="''+item.id"
           />
         </el-tabs>
       </div>
     </div>
     <div class="main">
       <div class="list">
-        test
-        <MyList :list="product" v-if="product.length>0"></MyList>
+        
+        <MyList :list="game" v-if="game.length>0"></MyList>
         <div v-else class="none-product">No games</div>
       </div>
       <!-- 分页 -->
@@ -49,13 +49,15 @@ export default {
   data() {
     return {
       filename: "",
-      categoryList:[
-        {category_id:"0",category_name:"All"},
-        {category_id:"1",category_name:"Action"},
-      {category_id:"2",category_name:"Role-Playing"},
-      {category_id:"3",category_name:"Puzzle"}
+      // categoryList:[
+      //   {category_id:"0",category_name:"All"},
+      //   {category_id:"1",category_name:"Action"},
+      // {category_id:"2",category_name:"Role-Playing"},
+      // {category_id:"3",category_name:"Puzzle"}
       
-      ],
+      // ],
+      game:"",
+      categoryList:"",
       categoryID: [], // 分类id
       product: [{url:'avatar', product_id:1},
           {url:'p1',product_id:2},
@@ -66,7 +68,7 @@ export default {
       total: 0, // 商品总量
       pageSize: 15, // 每页显示的商品数量
       currentPage: 1, //当前页码
-      activeName: "-1", // 分类列表当前选中的id
+      activeName: "0", // 分类列表当前选中的id
       search: "" // 搜索条件
 
     };
@@ -74,12 +76,56 @@ export default {
   created() {
     // 获取分类列表
     this.getCategory();
+    this.getData();
+  },
+  watch: {
+    // 监听点击了哪个分类标签，通过修改分类id，响应相应的商品
+    activeName: function(val) {
+      if (val == 0) {
+        this.categoryID = [];
+      }
+      if (val > 0) {
+        this.categoryID = [Number(val)];
+      }
+      // 初始化商品总量和当前页码
+      this.total = 0;
+      this.currentPage = 1;
+      // 更新地址栏链接，方便刷新页面可以回到原来的页面
+      this.$router.push({
+        path: "/categories",
+        query: { categoryID: this.categoryID }
+      });
+    },
+    // 监听搜索条件，响应相应的商品
+    search: function(val) {
+      if (val != "") {
+        this.getProductBySearch(val);
+      }
+    },
+    // 监听分类id，响应相应的商品
+    categoryID: function() {
+      this.getData();
+      this.search = "";
+    },
+    // 监听路由变化，更新路由传递了搜索条件
+    $route: function(val) {
+      if (val.path == "/goods") {
+        if (val.query.search != undefined) {
+          this.activeName = "-1";
+          this.currentPage = 1;
+          this.total = 0;
+          this.search = val.query.search;
+        }
+      }
+    }
   },
   activated() {
-    this.activeName = "-1"; // 初始化分类列表当前选中的id为-1
+    this.categoryID = [];
+    this.activeName = "0"; // 初始化分类列表当前选中的id为-1
     this.total = 0; // 初始化商品总量为0
     this.currentPage = 1; //初始化当前页码为1
     // 如果路由没有传递参数，默认为显示全部商品
+    console.log(this.$route.query);
     if (Object.keys(this.$route.query).length == 0) {
       this.categoryID = [];
       this.activeName = "0";
@@ -130,14 +176,16 @@ export default {
     // 向后端请求分类列表数据a
     getCategory() {
       this.$axios
-        .post("/api/game/getCategory", {})
-        .then(res => {
+        .post("/api/getAllGameTypes",{})
+        .then(({data})=> {
           const val = {
-            category_id: 0,
-            category_name: "全部"
+            id: 0,
+            gameTypeName: "All"
           };
-          const cate = res.data.category;
+          // const cate = res.data.category;
+          const cate = data;
           cate.unshift(val);
+           console.log(data);
           this.categoryList = cate;
         })
         .catch(err => {
@@ -149,17 +197,19 @@ export default {
       // 如果分类列表为空则请求全部商品数据，否则请求分类商品数据
       const api =
         this.categoryID.length == 0
-          ? "/api/product/getAllGame"
-          : "/api/product/getGameByCategory";
+          ? "/api/getAllGames"
+          : "/api/getGamesByType";
       this.$axios
         .post(api, {
-          categoryID: this.categoryID,
+          gameTypeId: this.categoryID,
           currentPage: this.currentPage,
           pageSize: this.pageSize
         })
-        .then(res => {
-          this.game = res.data.game;
-          this.total = res.data.total;
+        .then(({data})=> {
+          console.log(data);
+          this.game = data;
+          this.total = data.length;
+          console.log("ismygame");
         })
         .catch(err => {
           return Promise.reject(err);
@@ -262,4 +312,5 @@ export default {
   margin-left: 13.7px;
 }
 /* 主要内容区CSS END */
+
 </style>

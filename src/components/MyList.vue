@@ -7,16 +7,16 @@
  -->
 <template>
   <div id="myList" class="myList">
-    if mylist
+ 
     <ul>
-      <li v-for="item in list" :key="item.product_id">
-        <p>listc</p>
+      <li v-for="item in list" :key="item.id">
+       
         <router-link to="/">
         <!-- <router-link :to="{ path: '/goods/details', query: {productID:item.product_id} }"> -->
-          <!-- <img :src="$target +item.product_picture" alt /> -->
-          <img :src="require('../../static/img/'+item.url+'.png')" item alt=""  width=100%>
-          <h2>{{item.product_id}}</h2>
-          <h3>{{item.product_id}}</h3>
+         <img src="../../static/img/p1.png" width=100%>
+          <!-- <img :src="require('../../static/img/'+item.url+'.png')" item alt=""  width=100%> -->
+          <h2>{{item.gamename}}</h2>
+          <h3>{{item.system}}</h3>
           <p>
             <!-- <span>{{item.product_selling_price}}元</span>
             <span
