@@ -49,13 +49,6 @@ export default {
   data() {
     return {
       filename: "",
-      // categoryList:[
-      //   {category_id:"0",category_name:"All"},
-      //   {category_id:"1",category_name:"Action"},
-      // {category_id:"2",category_name:"Role-Playing"},
-      // {category_id:"3",category_name:"Puzzle"}
-
-      // ],
       game:"",
       categoryList:"",
       categoryID: [], // 分类id
