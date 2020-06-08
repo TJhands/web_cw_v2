@@ -29,13 +29,14 @@
             active-text-color="#fff">
           <!-- <el-menu-item   index="1">Home</el-menu-item> -->
           <el-menu-item index="1" class="iconfont icon-home"><router-link to="/">Home</router-link></el-menu-item>
-          <el-submenu index="2">
-            <template    slot="title">Pages</template>
-            <el-menu-item index="2-1">选项1</el-menu-item>
-            <el-menu-item index="2-2">选项2</el-menu-item>
-            <el-menu-item index="2-3">选项3</el-menu-item>
-          </el-submenu>
+          <el-menu-item index="2" class="iconfont icon-home"><router-link to="/categories">categories</router-link></el-menu-item>
           <el-submenu index="3">
+            <template    slot="title">Pages</template>
+            <el-menu-item index="3-1">选项1</el-menu-item>
+            <el-menu-item index="3-2">选项2</el-menu-item>
+            <el-menu-item index="3-3">选项3</el-menu-item>
+          </el-submenu>
+          <el-submenu index="4">
             <template  slot="title">Pages</template>
             <el-menu-item index="3-1">选项1</el-menu-item>
             <el-menu-item index="3-2">选项2</el-menu-item>
@@ -44,10 +45,10 @@
           <el-menu-item>
             <router-link v-if="user !== null" to="/protected">Protected</router-link>
           </el-menu-item>
-          <el-menu-item index="4"><router-link v-if="user === null" to="/login">Login</router-link></el-menu-item>
-          <el-menu-item index="5" vertical-align="top"><router-link v-if="user === null" to="/register">Register</router-link></el-menu-item>
-          <el-menu-item index="6" vertical-align="top" ><li v-if="user !== null"><a href="#" @click.prevent="doLogout">Logout</a></li></el-menu-item>
-          <el-menu-item index="6" vertical-align="top" ><li v-if="user !== null"><a href="#" @click.prevent="doLogout"></a>{{ user.username }}</li></el-menu-item>
+          <el-menu-item index="5"><router-link v-if="user === null" to="/login">Login</router-link></el-menu-item>
+          <el-menu-item index="6" vertical-align="top"><router-link v-if="user === null" to="/register">Register</router-link></el-menu-item>
+          <el-menu-item index="7" vertical-align="top" ><li v-if="user !== null"><a href="#" @click.prevent="doLogout">Logout</a></li></el-menu-item>
+          <el-menu-item index="8" vertical-align="top" ><li v-if="user !== null"><a href="#" @click.prevent="doLogout"></a>{{ user.username }}</li></el-menu-item>
           <!-- <el-menu-item ><li v-if="user !== null">{{ user.username }}<a href="#" @click.prevent="doLogout">Logout</a></li></el-menu-item> -->
         </el-menu>
       </el-col>

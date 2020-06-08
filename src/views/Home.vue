@@ -3,7 +3,9 @@
     <span class="demonstration">showgames</span>
     <el-carousel height="450px">
       <el-carousel-item v-for="item in img_list" :key="item">
-        <img :src= "item" item alt=""  width=100%>
+        <!-- <img :src= "item.url" item alt=""  width=100%> -->
+         <img :src="require('../../static/img/'+item.url+'.png')" item alt=""  width=100%>
+        
         <!-- <img src="../../static/img/p1.png" width=100%>
         <img src="../../static/img/p1.png" width=100%>
         <img src="../../static/img/p1.png" width=100%>  -->
@@ -33,12 +35,23 @@
     name: "Banner",
     data() {
       return {
-          img_list:[
-             require("../../static/img/p1.png"),
-             require("../../static/img/p1.png"),
-             require("../../static/img/p1.png"),
-             require("../../static/img/p1.png"),
-            ],
+          // img_list:[
+          //    require("../../static/img/p1.png"),
+          //    require("../../static/img/p1.png"),
+          //    require("../../static/img/p1.png"),
+          //    require("../../static/img/p1.png"),
+          //   ],
+            //   img_list:[{url:require('../../static/img/'+'p1'+'.png')},
+            //   {url:require('../../static/img/p1.png')},
+            //   {url:require('../../static/img/p1.png')}
+           
+            // ],
+
+          img_list:[{url:'avatar'},
+          {url:'p1'},
+          {url:'p1'},
+          
+          ]
         // tableData:[]
         // tableData: [{
         //   date: '2016-05-02',

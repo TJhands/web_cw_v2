@@ -6,8 +6,12 @@ import Protected from "../views/Protected.vue";
 import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
 import NotFound from "../views/NotFound.vue";
-
+import categories from "../views/categories.vue";
 import store from "@/store";
+
+import MyList from '../components/MyList';
+Vue.component(MyList.name, MyList);
+
 Vue.use(VueRouter);
 function authcheck(to, from, next) {
   if (store.state.user !== null) {
@@ -26,6 +30,13 @@ const routes = [
     beforeEnter: authcheck,
     component: Protected,
     meta: { title: "Protected" }
+  },
+  {
+    path: "/categories",
+    name: "categories",
+    beforeEnter: authcheck,
+    component: categories,
+    meta: { title: "categories" }
   },
   {
     path: "/login",
