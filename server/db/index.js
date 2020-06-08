@@ -50,10 +50,10 @@ Reply.init(
   { sequelize, modelName: "reply" }
 );
 
-Game.belongsTo(GameType);
+GameType.hasMany(Game);
 Reply.belongsTo(User,{as :'poster'});
-Reply.belongsTo(Game);
-Reply.hasOne(Reply,{as :'replyTo'});
+Game.hasMany(Reply);
+Reply.hasMany(Reply,{as :'child'});
 Game.belongsToMany(User,{through: 'subscription', foreignKey: 'gameId'});
 User.belongsToMany(Game,{through: 'subscription', foreignKey: 'userId'});
 
@@ -64,5 +64,5 @@ module.exports = {
   User,
   Game,
   GameType,
-  Reply
+  Reply,
 };
