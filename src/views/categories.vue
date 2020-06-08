@@ -15,7 +15,7 @@
     </div>
     <div class="main">
       <div class="list">
-        
+
         <MyList :list="game" v-if="game.length>0"></MyList>
         <div v-else class="none-product">No games</div>
       </div>
@@ -31,12 +31,12 @@
       </div>
       <!-- 分页END -->
     </div>
-   
-  
 
-   
-    
- 
+
+
+
+
+
 
   </div>
 </template>
@@ -54,7 +54,7 @@ export default {
       //   {category_id:"1",category_name:"Action"},
       // {category_id:"2",category_name:"Role-Playing"},
       // {category_id:"3",category_name:"Puzzle"}
-      
+
       // ],
       game:"",
       categoryList:"",
@@ -62,11 +62,11 @@ export default {
       product: [{url:'avatar', product_id:1},
           {url:'p1',product_id:2},
           {url:'p1',product_id:3},
-          
+
           ], // 商品列表
       productList: "",
       total: 0, // 商品总量
-      pageSize: 15, // 每页显示的商品数量
+      pageSize: 12, // 每页显示的商品数量
       currentPage: 1, //当前页码
       activeName: "0", // 分类列表当前选中的id
       search: "" // 搜索条件
@@ -144,7 +144,7 @@ export default {
       this.search = this.$route.query.search;
     }
   },
-  
+
   methods: {
     doRegister() {
       this.$store.dispatch("UPLOAD");
@@ -207,15 +207,15 @@ export default {
         })
         .then(({data})=> {
           console.log(data);
-          this.game = data;
-          this.total = data.length;
+          this.game = data.rows;
+          this.total = data.count;
           console.log("ismygame");
         })
         .catch(err => {
           return Promise.reject(err);
         });
     },
-    
+
 
 
 
