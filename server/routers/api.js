@@ -171,4 +171,16 @@ router.post("/checkIsFavoriteGame", async (req,res) =>{
     })
 });
 
+router.post("/writeComment", async (req,res) =>{
+    let{userId,gameId,replyId,content} = req.body;
+    Reply.create({
+        userId: userId,
+        gameId:gameId,
+        replyId:replyId,
+        content:content
+    }).then(reply =>{
+        res.json({result:true})
+    })
+});
+
 module.exports = router;
