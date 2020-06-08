@@ -24,9 +24,22 @@
     </el-card>
   </el-col>
 </el-row>
-
+      <el-table
+              :data="tableData"
+              style="width: 100%">
+          <el-table-column
+                  prop="username"
+                  label="username"
+                  width="180">
+          </el-table-column>
+          <el-table-column
+                  prop="lastLoginTime"
+                  label="lastLoginTime"
+                  width="180">
+          </el-table-column>
+      </el-table>
   </div>
- 
+
 </template>
 <script>
   export default {
@@ -39,7 +52,7 @@
              require("../../static/img/p1.png"),
              require("../../static/img/p1.png"),
             ],
-        // tableData:[]
+        tableData:[]
         // tableData: [{
         //   date: '2016-05-02',
         //   name: '王小虎',
@@ -79,12 +92,12 @@
     line-height: 150px;
     margin: 0;
   }
- 
- 
+
+
   .el-carousel__item:nth-child(2n) {
      background-color: #99a9bf;
   }
-  
+
   .el-carousel__item:nth-child(2n+1) {
      background-color: #d3dce6;
   }
@@ -92,7 +105,7 @@
     font-size: 13px;
     color: #999;
   }
-  
+
   .bottom {
     margin-top: 13px;
     line-height: 12px;
@@ -113,9 +126,9 @@
       display: table;
       content: "";
   }
-  
+
   .clearfix:after {
       clear: both
   }
-  
+
 </style>
