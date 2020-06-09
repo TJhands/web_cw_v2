@@ -69,7 +69,8 @@
   </div>
    </el-row>
    <el-row>
-    <router-link  to="/categories">See More</router-link>
+    <router-link 
+     to="/categories">See More</router-link>
     </el-row>
 
 
