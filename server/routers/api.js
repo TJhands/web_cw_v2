@@ -168,7 +168,7 @@ router.post("/checkIsFavoriteGame", async (req,res) =>{
                 id: gameId
             }
         }).then(game =>{
-            if (game !== null){
+            if (game.length !== 0){
                 res.json({result:true})
             } else{
                 res.json({result:false})
