@@ -14,8 +14,8 @@
         <!-- <router-link to="/"> -->
         <router-link :to="{ path: '/detail', query: {productID:item.id} }">
         <!-- <router-link :to="{ path: '/goods/details', query: {productID:item.product_id} }"> -->
-         <img src="../../static/img/p1.png" width=100%>
-          <!-- <img :src="require('../../static/img/'+item.url+'.png')" item alt=""  width=100%> -->
+         <!-- <img src="../../static/img/p1.png" width=100%> -->
+          <img :src="require('../assets/image/'+item.imagePath+'.jpg')" item alt=""  width=100%>
           <h2>{{item.gamename}}</h2>
           <h3>{{item.system}}</h3>
           <p>

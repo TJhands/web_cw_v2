@@ -15,30 +15,24 @@
             :src="$target + productPicture[0].product_picture"
             :alt="productPicture[0].intro"
           /> -->
-         <img src="../../static/img/p1.png" class="image" height="560px">
+         <!-- <img src="../../static/img/p1.png" class="image" height="560px"> -->
+         <img :src="require('../assets/image/'+productDetails.imagePath+'.jpg')" item alt=""  width=100% height="360px">
 
         </div>
       </div>
       
 
       <div class="content">
-        <h1 class="name">tttttesy</h1>
-        <p class="intro">tttest</p>
-        <p class="store">小米自营</p>
-        <div class="price">
-          <span>元</span>
-         
-        </div>
+       <h1 class="name">{{productDetails.gamename}}</h1>
+        <p class="intro">{{productDetails.comment}}</p>
+        <p class="store">{{productDetails.system}}</p>
+    
+        <!-- <p class="price-sum">Score : {{productDetails.score}}</p> -->
+        
         <div class="pro-list">
-          <span class="pro-name">testname</span>
-          <span class="pro-price">
-            <span>元</span>
-            <span
-            
-              class="pro-del"
-            >元</span>
-          </span>
-          <p class="price-sum">总计 : 元</p>
+          
+          
+          <p class="price-sum">Score of {{productDetails.gamename}} : {{productDetails.score}}</p>
         </div>
         <!-- 内容区底部按钮 -->
         <div class="button">
@@ -65,13 +59,18 @@
 // @ is an alias to /src
 
 export default {
-  name: "Upload",
+  // name: "Upload",
   data() {
     return {
       pageSize: 12, // 每页显示的商品数量
       currentPage: 1, //当前页码
       activeName: "0", // 分类列表当前选中的id
       search: "" ,// 搜索条件
+      productID: "9", // 商品id
+      productDetails: "", // 商品详细信息
+      productPicture: "" ,// 商品图片
+
+
       comments: [
         {
           id: 0,
@@ -98,16 +97,42 @@ export default {
       ]
 
     };
-  }, mounted() {
-      this.init();
-    },
+  },
+  //  mounted() {
+  //     this.init();
+  //   },
+       created() {
+        this.productID = this.$route.query.productID;
+        this.getDetails(this.productID);
+        // this.productID = 7
+    
+  },  
+  
+  // watch: {
+  //   // 监听商品id的变化，请求后端获取商品数据
+  //   productID: function(val) {
+  //     this.getDetails(val);
+  //     this.getDetailsPicture(val);
+  //   }
+  // },
+   
     methods: {
-      init(){
-        this.$axios.get("/api/getAllUsers/1",).then(({data}) => {
-          this.tableData = data;
+      
+       getDetails(val) {
+         var myapi='/api/getGameCommentById/'+this.productID
+         this.$axios
+        .get(myapi)
+        .then(({data})=> {
+          this.productDetails = data;
+          console.log("mydetail");
+          console.log(data);
+        })
+        .catch(err => {
+          return Promise.reject(err);
         });
-      }
-    },
+    }
+    ,
+
      setTextarea: function(params) {
       let { index, open, to_uid, to_uname } = params;
       let comments = this.comments;
@@ -120,6 +145,10 @@ export default {
       // debugger
       this.comments = comments;
     },
+
+
+    },
+    
   }
 </script>
 
@@ -127,7 +156,7 @@ export default {
 /* 主要内容CSS */
 #details .main {
   width: 1225px;
-  height: 900px;
+  height: 700px;
   padding-top: 30px;
   margin: 0 auto;
 }
@@ -152,7 +181,7 @@ export default {
   color: #212121;
 }
 #details .main .content .intro {
-  color: #b0b0b0;
+  color:rgb(107, 124, 124);
   padding-top: 10px;
 }
 #details .main .content .store {
@@ -189,8 +218,8 @@ export default {
   text-decoration: line-through;
 }
 #details .main .content .pro-list .price-sum {
-  color: #ff6700;
-  font-size: 24px;
+  color: rgb(168, 49, 109);
+  font-size: 28px;
   padding-top: 20px;
 }
 #details .main .content .button {

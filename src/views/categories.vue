@@ -139,9 +139,9 @@ export default {
   },
 
   methods: {
-    doRegister() {
-      this.$store.dispatch("UPLOAD");
-    },
+    // doRegister() {
+    //   this.$store.dispatch("UPLOAD");
+    // },
 
     // 返回顶部
     backtop() {
@@ -214,9 +214,9 @@ export default {
 
   },
   mounted() {
-    this.$store.dispatch("CHECK_STATUS").then(loggedIn => {
-      if (!loggedIn) this.$router.push({ name: "Login" });
-    });
+    // this.$store.dispatch("CHECK_STATUS").then(loggedIn => {
+    //   if (!loggedIn) this.$router.push({ name: "Login" });
+    // });
 
   }
 };
