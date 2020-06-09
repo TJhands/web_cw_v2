@@ -6,7 +6,8 @@
         <!-- <span class="date"><i class="iconfont icon-date"></i>{{date}}</span>
         <span class="category"><i class="iconfont icon-tubiao13"></i><span v-for="tag in category" :key="tag.id">{{tag}}</span></span> -->
       </div>
-      <div id="details">
+       <el-row>
+      <div id="details" class="detail">
       <div class="main">
         <div class="block">
         <div>
@@ -37,7 +38,7 @@
         <!-- 内容区底部按钮 -->
         <div class="button">
           <!-- <el-button class="shop-cart" :disabled="dis" @click="addShoppingCart">加入购物车</el-button> -->
-          <el-button class="like">喜欢</el-button>
+          <el-button ref='btn1' class="like" @click="addCollect">{{likeC}}</el-button>
         </div>
         <!-- 内容区底部按钮END -->
         
@@ -45,12 +46,16 @@
 
       </div>
       </div>
-      
+       </el-row>
+      <el-row>
       <div class="detail" v-if="content">
           <!-- <mavon-editor v-model="content" default_open="preview" defaultOpen= "preview"  :toolbarsFlag="false" :subfield="false"></mavon-editor> -->
           
       </div>
+      <div class="comm">
       <comment :comments="comments" :articleId="articleId" @update="update" @setTextarea="setTextarea"></comment>
+      </div>
+       </el-row>
     </div>
      </div>
 </template>
@@ -69,6 +74,9 @@ export default {
       productID: "9", // 商品id
       productDetails: "", // 商品详细信息
       productPicture: "" ,// 商品图片
+      likeC:"",
+      // cancelC:"Cancle from My Favorite",
+      flag:"",
 
 
       comments: [
@@ -98,12 +106,15 @@ export default {
 
     };
   },
-  //  mounted() {
-  //     this.init();
-  //   },
+   mounted() {
+      
+    },
        created() {
         this.productID = this.$route.query.productID;
         this.getDetails(this.productID);
+        this.checkC(this.productID);
+        
+
         // this.productID = 7
     
   },  
@@ -117,6 +128,42 @@ export default {
   // },
    
     methods: {
+       checkC(val){
+
+         this.$axios
+        .post("/api/checkIsFavoriteGame", {
+          // user_id: this.$store.getters.getUser.user_id,
+          
+          // userId:this.$store.state.user.id,
+           userId:this.$store.state.user.id,
+           gameId: this.productID,
+          
+        })
+        .then(({data})=> {
+          console.log("checkF");
+         
+          var rec=data.result;
+            console.log(rec);
+            if(rec==true){
+           this.flag=true;
+           this.likeC="Cancel from My Favorite";
+
+         }
+         else if (rec==false){
+           this.flag=false;
+           this.likeC="Add to My Favorite";
+         }
+
+        })
+        .catch(err => {
+          return Promise.reject(err);
+        });
+         console.log("check2");
+       
+
+
+
+       },
       
        getDetails(val) {
          var myapi='/api/getGameCommentById/'+this.productID
@@ -132,6 +179,77 @@ export default {
         });
     }
     ,
+
+      addCollect(val) {
+        console.log(this.flag+'1');
+       
+      // 判断是否登录,没有登录则显示登录组件
+      // if (!this.$store.getters.getUser) {
+      //   this.$store.dispatch("setShowLogin", true);
+      //   return;
+      // }
+
+      //console.log(val.target.innerText )
+       
+  
+      if(this.flag == true){ 
+             console.log(this.flag+'2');
+            this.likeC="Add to My Favorite";
+        this.$axios
+        .post("/api/removeFavoriteGame", {
+          // user_id: this.$store.getters.getUser.user_id,
+          
+          // userId:this.$store.state.user.id,
+          userId:this.$store.state.user.id,
+           gameId: this.productID,
+          
+        })
+        .then(({data})=> {
+        })
+        .catch(err => {
+          return Promise.reject(err);
+        });
+         this.flag =false;
+      
+
+
+                       
+                }
+      else if(this.flag == false){
+          console.log(this.flag+'3');
+           this.likeC="Cancel from My Favorite";
+           
+         
+         this.$axios
+        .post("/api/addFavoriteGame", {
+          // user_id: this.$store.getters.getUser.user_id,
+          
+          // userId:this.$store.state.user.id,
+          userId:this.$store.state.user.id,
+           gameId: this.productID,
+          
+        })
+        .then(({data})=> {
+        })
+        .catch(err => {
+          return Promise.reject(err);
+        });
+         console.log("addcollected");
+                    this.flag=true  
+                } 
+               
+         console.log(this.flag+'4');
+         
+                
+           
+        
+
+      // console.log("mycollected");
+      // console.log(this.productID);
+      
+      //  this.notifySucceed("succeed");
+
+    },
 
      setTextarea: function(params) {
       let { index, open, to_uid, to_uname } = params;
@@ -156,10 +274,12 @@ export default {
 /* 主要内容CSS */
 #details .main {
   width: 1225px;
-  height: 700px;
+  height:auto;
   padding-top: 30px;
+
   margin: 0 auto;
 }
+
 #details .main .block {
   float: left;
   width: 500px;
@@ -184,6 +304,7 @@ export default {
   color:rgb(107, 124, 124);
   padding-top: 10px;
 }
+
 #details .main .content .store {
   color: #ff6700;
   padding-top: 10px;
@@ -342,4 +463,6 @@ export default {
     }
   }
 }
+
+
 </style>

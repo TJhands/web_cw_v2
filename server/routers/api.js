@@ -33,7 +33,7 @@ router.post("/getAllGames", async (req,res) =>{
 
    let { currentPage = 1, pageSize } = req.body;
    let offset = (currentPage - 1) * pageSize;
-   Game.findAndCountAll({
+   Game.findAll({
        limit: pageSize,
        offset: offset
    }).then(games =>{
@@ -50,7 +50,7 @@ router.post("/getGamesByType", async (req,res) =>{
     console.log(req.body);
     let { gameTypeId, currentPage = 1, pageSize } = req.body;
     let offset = (currentPage - 1) * pageSize;
-    Game.findAndCountAll({
+    Game.findAll({
         where: {
           gameTypeId:gameTypeId[0]
         },
@@ -93,13 +93,7 @@ router.get("/getGameCommentById/:id", async (req,res) =>{
                     },
                     {
                         model: Reply,
-                        as: 'child',
-                        include:[{
-                            model: User,
-                            as: 'poster'
-                        }
-
-                        ]
+                        as: 'child'
                     }
                 ]
             }
@@ -168,7 +162,7 @@ router.post("/checkIsFavoriteGame", async (req,res) =>{
                 id: gameId
             }
         }).then(game =>{
-            if (game.length !== 0){
+            if (game !== null){
                 res.json({result:true})
             } else{
                 res.json({result:false})

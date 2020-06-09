@@ -30,7 +30,8 @@
           <!-- <el-menu-item   index="1">Home</el-menu-item> -->
           <el-menu-item index="1" class="iconfont icon-home"><router-link to="/">Home</router-link></el-menu-item>
           <el-menu-item index="2" class="iconfont icon-home"><router-link to="/categories">categories</router-link></el-menu-item>
-          <el-submenu index="3">
+          <el-menu-item index="3" class="iconfont icon-home"><router-link to="/Collect">My Favorite</router-link></el-menu-item>
+          <!-- <el-submenu index="3">
             <template    slot="title">Pages</template>
             <el-menu-item index="3-1">选项1</el-menu-item>
             <el-menu-item index="3-2">选项2</el-menu-item>
@@ -44,7 +45,7 @@
           </el-submenu>
           <el-menu-item>
             <router-link v-if="user !== null" to="/protected">Protected</router-link>
-          </el-menu-item>
+          </el-menu-item> -->
           <el-menu-item index="5"><router-link v-if="user === null" to="/login">Login</router-link></el-menu-item>
           <el-menu-item index="6" vertical-align="top"><router-link v-if="user === null" to="/register">Register</router-link></el-menu-item>
           <el-menu-item index="7" vertical-align="top" ><li v-if="user !== null"><a href="#" @click.prevent="doLogout">Logout</a></li></el-menu-item>

@@ -8,6 +8,7 @@ import Register from "../views/Register.vue";
 import NotFound from "../views/NotFound.vue";
 import categories from "../views/categories.vue";
 import detail from "../views/detail.vue";
+import Collect from "../views/Collect.vue";
 import store from "@/store";
 
 import MyList from '../components/MyList';
@@ -40,6 +41,12 @@ const routes = [
     name: "categories",
     component: categories,
     meta: { title: "categories" }
+  },
+  {
+    path: "/Collect",
+    name: "Collect",
+    component: Collect,
+    meta: { title: "Collect" }
   },
   {
     path: "/detail",
