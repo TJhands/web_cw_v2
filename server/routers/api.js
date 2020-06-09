@@ -93,7 +93,13 @@ router.get("/getGameCommentById/:id", async (req,res) =>{
                     },
                     {
                         model: Reply,
-                        as: 'child'
+                        as: 'child',
+                        include:[{
+                            model: User,
+                            as: 'poster'
+                        }
+
+                        ]
                     }
                 ]
             }
