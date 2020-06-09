@@ -17,7 +17,7 @@
             :alt="productPicture[0].intro"
           /> -->
          <!-- <img src="../../static/img/p1.png" class="image" height="560px"> -->
-         <img :src="require('../assets/image/'+productDetails.imagePath+'.jpg')" item alt=""  width=100% height="360px">
+         <img :src="require('../assets/image_png/'+productDetails.imagePath+'.png')" item alt=""  width=100% height="360px">
 
         </div>
       </div>
@@ -282,8 +282,8 @@ export default {
 
 #details .main .block {
   float: left;
-  width: 500px;
-  height: 560px;
+  width: 360px;
+  height: 300px;
 }
 #details .el-carousel .el-carousel__indicator .el-carousel__button {
   background-color: rgba(163, 163, 163, 0.8);
