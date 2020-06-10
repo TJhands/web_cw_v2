@@ -11,10 +11,20 @@
     <div class="collect-header">
       <div class="collect-title">
         <i class="el-icon-collection-tag" style="color: #ff6700;"></i>
-        我的收藏
+        My Favorite Games
       </div>
     </div>
-    <div class="content">
+         
+            
+      
+    <div  class="content">
+
+       <div v-if="user == null"  class="collect-empty">
+            <h2>Log In and Collect Games </h2>
+            </div>
+
+      
+      <div v-else>
       <div class="goods-list" v-if="collectList.length>0">
         <MyList :list="collectList" :isDelete="true"></MyList>
       </div>
@@ -27,6 +37,8 @@
         </div> -->
       </div>
       <!--  收藏列表为空的时候显示的内容END -->
+      </div>
+
     </div>
   </div>
 </template>
@@ -46,6 +58,11 @@ export default {
         // this.productID = 7
     
   },  
+    computed: {
+    user() {
+      return this.$store.state.user;
+    }
+  },
   methods: {
     getcollect(){
       console.log(this.$store.state.user.id);

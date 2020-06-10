@@ -6,18 +6,18 @@
         <div class="input_top">
           <div class="img">
                   <!-- <img class="avatar"  :src="avatar!='null'?avatar:imgDefault" alt=""> -->
-                  <p class="from_uname">{{nickName}}</p>
+                  <p class="from_uname">{{user.username}}</p>
                   </div>
           <div class="text"><textarea v-model="submitTxt" class="textarea"></textarea></div>
         </div>
         <div class="input_down">
-     
+          
           <a  href="javascript:;" @click="submit_new" class="submit">submit</a>
         </div>
         </div>
       </div>
       <div v-if="comments.length>0" class="part part_output">
-        <p class="output_header">全部评论 <span class="total">{{comments.length}}</span> 条</p>
+        <p class="output_header">All <span class="total">{{comments.length}}</span> Comments</p>
         <div class="output_body">
           <div v-for="  comment in comments" :key="comment.id" class="floor">
             <div class="floor_l">
