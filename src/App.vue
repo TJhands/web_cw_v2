@@ -3,6 +3,7 @@
     <nav id="nav"   >
           <el-col :span="7">
         <div class="logo">
+            <router-link to="/">
            <svg    margin-left="1px" version="1.0" xmlns="http://www.w3.org/2000/svg"
  width="60pt" height="60pt" viewBox="0 0 1273.000000 1280.000000">
 <g transform="translate(0.000000,1280.000000) scale(0.100000,-0.100000)"
@@ -76,20 +77,20 @@ l-112 126 117 6 c435 21 799 250 1087 683 61 92 175 309 190 362 4 15 -26 -10
 -96 -374 -3 -44 -10 -82 -14 -84 -4 -3 -39 9 -76 26 -136 62 -329 121 -454
 139 -80 11 -108 38 -139 131 -23 72 -61 241 -61 279 -1 44 -15 54 -28 18z"/>
 </g>
-	
-<text font-family="'Helvetica Neue','PingFang SC','microsoft yahei'" 
+
+<text font-family="'Helvetica Neue','PingFang SC','microsoft yahei'"
 	  font-size="200" x="0" y="1200">FFG</text>
 </svg>
 
           <!-- <img src="@/assets/logo.png" alt="Vue Logo" /> -->
           <span class="title" width="500px">{{ appTitle }}</span>
-        
-          
+            </router-link>
+
         </div>
-     
-        
-        
-          
+
+
+
+
 
 
 
@@ -103,13 +104,13 @@ l-112 126 117 6 c435 21 799 250 1087 683 61 92 175 309 190 362 4 15 -26 -10
         <router-link v-if="user !== null" to="/protected"
           >Protected</router-link
         > -->
-       
+
       <!-- </div> -->
 
       <!-- <el-col :span="9">
       </el-col> -->
       <el-col :span="17">
-        <el-menu 
+        <el-menu
         default-active="activeIndex"
             class="el-menu-demo hidden-xs-only nav-pc"
             mode="horizontal"
@@ -120,7 +121,7 @@ l-112 126 117 6 c435 21 799 250 1087 683 61 92 175 309 190 362 4 15 -26 -10
           <!-- <el-menu-item   index="1">Home</el-menu-item> -->
           <el-menu-item index="1" class="iconfont icon-home"><router-link to="/">Home</router-link></el-menu-item>
            <el-menu-item index="2" class="iconfont icon-home"><router-link to="/categories">Categories</router-link></el-menu-item>
-          <el-menu-item index="3" class="iconfont icon-home"><router-link to="/Collect">My Favorite</router-link></el-menu-item>
+          <el-menu-item index="3" class="iconfont icon-home"><router-link v-if="user !== null" to="/Collect">My Collection</router-link></el-menu-item>
           <!-- <el-submenu index="3">
             <template    slot="title">Pages</template>
             <el-menu-item index="3-1">选项1</el-menu-item>
@@ -179,11 +180,11 @@ export default {
       this.$store.dispatch("LOG_OUT");
       this.$router.push({ name: "Home" });
     },
-    
+
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
       }
-    
+
   }
   ,
   mounted() {

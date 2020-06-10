@@ -21,27 +21,27 @@
 
         </div>
       </div>
-      
+
 
       <div class="content">
        <h1 class="name">{{productDetails.gamename}}</h1>
         <p class="intro">{{productDetails.comment}}</p>
         <p class="store">{{productDetails.system}}</p>
-    
+
         <!-- <p class="price-sum">Score : {{productDetails.score}}</p> -->
-        
+
         <div class="pro-list">
-          
-          
+
+
           <p class="price-sum">Score of {{productDetails.gamename}} : {{productDetails.score}}</p>
         </div>
         <!-- 内容区底部按钮 -->
         <div class="button">
           <!-- <el-button class="shop-cart" :disabled="dis" @click="addShoppingCart">加入购物车</el-button> -->
-          <el-button ref='btn1' class="like" @click="addCollect">{{likeC}}</el-button>
+          <el-button ref='btn1' class="like" icon="el-icon-star-off" v-if="user !== null" @click="addCollect">{{likeC}}</el-button>
         </div>
         <!-- 内容区底部按钮END -->
-        
+
       </div>
 
       </div>
@@ -50,7 +50,7 @@
       <el-row>
       <div class="detail" v-if="content">
           <!-- <mavon-editor v-model="content" default_open="preview" defaultOpen= "preview"  :toolbarsFlag="false" :subfield="false"></mavon-editor> -->
-          
+
       </div>
       <div class="comm">
       <comment :comments="comments" :productId="productID" @update="update" @setTextarea="setTextarea"></comment>
@@ -102,16 +102,16 @@ export default {
             }
           ]
         },
-        
+
       ]
 
     };
   },
    mounted() {
-     
+
      this. getcomment();
-     
-      
+
+
     },
 
 
@@ -124,13 +124,13 @@ export default {
         this.productID = this.$route.query.productID;
         this.getDetails(this.productID);
         this.checkC(this.productID);
-        
-        
+
+
 
         // this.productID = 7
-    
-  },  
-  
+
+  },
+
   // watch: {
   //   // 监听商品id的变化，请求后端获取商品数据
   //   productID: function(val) {
@@ -138,7 +138,7 @@ export default {
   //     this.getDetailsPicture(val);
   //   }
   // },
-   
+
     methods: {
          update: function() {
       this.getcomment;
@@ -148,21 +148,20 @@ export default {
          this.$axios
         .post("/api/checkIsFavoriteGame", {
           // user_id: this.$store.getters.getUser.user_id,
-          
+
           // userId:this.$store.state.user.id,
            userId:this.$store.state.user.id,
            gameId: this.productID,
-          
+
         })
         .then(({data})=> {
           console.log("checkF");
-         
+
           var rec=data.result;
             console.log(rec);
             if(rec==true){
            this.flag=true;
            this.likeC="Cancel from My Favorite";
-
          }
          else if (rec==false){
            this.flag=false;
@@ -174,12 +173,12 @@ export default {
           return Promise.reject(err);
         });
          console.log("check2");
-       
+
 
 
 
        },
-      
+
        getDetails(val) {
          var myapi='/api/getGameCommentById/'+this.productID
          this.$axios
@@ -187,7 +186,7 @@ export default {
         .then(({data})=> {
           this.productDetails = data;
           console.log("mydetail");
-         
+
         })
         .catch(err => {
           return Promise.reject(err);
@@ -198,7 +197,7 @@ export default {
       addCollect(val) {
         console.log(this.flag+'1');
 
-       
+
       // 判断是否登录,没有登录则显示登录组件
       if (this.$store.state.user==null) {
          this.likeC="Log in and add to my favorite ";
@@ -206,19 +205,19 @@ export default {
       }
 
       console.log(val.target.innerText )
-       
-  
-      if(this.flag == true){ 
+
+
+      if(this.flag == true){
              console.log(this.flag+'2');
             this.likeC="Add to My Favorite";
         this.$axios
         .post("/api/removeFavoriteGame", {
           // user_id: this.$store.getters.getUser.user_id,
-          
+
           // userId:this.$store.state.user.id,
           userId:this.$store.state.user.id,
            gameId: this.productID,
-          
+
         })
         .then(({data})=> {
         })
@@ -226,24 +225,23 @@ export default {
           return Promise.reject(err);
         });
          this.flag =false;
-      
 
 
-                       
+
+
                 }
       else if(this.flag == false){
           console.log(this.flag+'3');
            this.likeC="Cancel from My Favorite";
-           
-         
+
          this.$axios
         .post("/api/addFavoriteGame", {
           // user_id: this.$store.getters.getUser.user_id,
-          
+
           // userId:this.$store.state.user.id,
           userId:this.$store.state.user.id,
            gameId: this.productID,
-          
+
         })
         .then(({data})=> {
         })
@@ -251,18 +249,18 @@ export default {
           return Promise.reject(err);
         });
          console.log("addcollected");
-                    this.flag=true  
-                } 
-               
+                    this.flag=true
+                }
+
          console.log(this.flag+'4');
-         
-                
-           
-        
+
+
+
+
 
       // console.log("mycollected");
       // console.log(this.productID);
-      
+
       //  this.notifySucceed("succeed");
 
     },
@@ -280,7 +278,7 @@ export default {
     //   this.comments = comments;
     // },
      getcomment: function() {
-      
+
       var pa= "/api/getGameCommentById/"+this.productID;
         this.$axios
           .get(pa,)
@@ -289,10 +287,10 @@ export default {
             console.log("testcomment"+data);
             this.comments=data['replies'];
              console.log(this.comments.length);
-           
 
 
-        
+
+
             // if (comments) {
             //   for (let i = 0; i < comments.length; i++) {
             //     comments[i]["open"] = false;
@@ -302,14 +300,14 @@ export default {
             //   this.comments = comments;
             // }
           });
-     
-    },
-
-
-
 
     },
-    
+
+
+
+
+    },
+
   }
 </script>
 
@@ -409,11 +407,11 @@ export default {
 #details .main .content .button .like {
   width: 260px;
   margin-left: 40px;
-  background-color: #b0b0b0;
+  background-color: #E6A23C;
 }
-#details .main .content .button .like:hover {
-  background-color: #757575;
-}
+/*#details .main .content .button .like:hover {*/
+/*  background-color: #757575;*/
+/*}*/
 #details .main .content .pro-policy li {
   float: left;
   margin-right: 20px;
