@@ -182,7 +182,7 @@ router.post("/checkIsFavoriteGame", async (req,res) =>{
 router.post("/writeComment", async (req,res) =>{
     let{userId,gameId,replyId,content} = req.body;
     Reply.create({
-        userId: userId,
+        posterId: userId,
         gameId:gameId,
         replyId:replyId,
         content:content

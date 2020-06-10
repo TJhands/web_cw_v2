@@ -53,7 +53,7 @@
           
       </div>
       <div class="comm">
-      <comment :comments="comments" :articleId="articleId" @update="update" @setTextarea="setTextarea"></comment>
+      <comment :comments="comments" :productId="productID" @update="update" @setTextarea="setTextarea"></comment>
       </div>
        </el-row>
     </div>
@@ -77,6 +77,7 @@ export default {
       likeC:"",
       // cancelC:"Cancle from My Favorite",
       flag:"",
+      allcomments:"",
 
 
       comments: [
@@ -107,12 +108,23 @@ export default {
     };
   },
    mounted() {
+     
+     this. getcomment();
+     
       
     },
+
+
+     computed: {
+    user() {
+      return this.$store.state.user;
+    }
+  },
        created() {
         this.productID = this.$route.query.productID;
         this.getDetails(this.productID);
         this.checkC(this.productID);
+        
         
 
         // this.productID = 7
@@ -128,6 +140,9 @@ export default {
   // },
    
     methods: {
+         update: function() {
+      this.getcomment;
+    },
        checkC(val){
 
          this.$axios
@@ -172,7 +187,7 @@ export default {
         .then(({data})=> {
           this.productDetails = data;
           console.log("mydetail");
-          console.log(data);
+         
         })
         .catch(err => {
           return Promise.reject(err);
@@ -251,18 +266,45 @@ export default {
 
     },
 
-     setTextarea: function(params) {
-      let { index, open, to_uid, to_uname } = params;
-      let comments = this.comments;
-      // console.log(params)
-      if (to_uid) {
-        comments[index]["to_uid"] = to_uid;
-        comments[index]["to_uname"] = to_uname;
-      }
-      comments[index]["open"] = open;
-      // debugger
-      this.comments = comments;
+    //  setTextarea: function(params) {
+    //   let { index, open, to_uid, to_uname } = params;
+    //   let comments = this.comments;
+    //   // console.log(params)
+    //   if (to_uid) {
+    //     comments[index]["to_uid"] = to_uid;
+    //     comments[index]["to_uname"] = to_uname;
+    //   }
+    //   comments[index]["open"] = open;
+    //   // debugger
+    //   this.comments = comments;
+    // },
+     getcomment: function() {
+      
+      var pa= "/api/getGameCommentById/"+this.productID;
+        this.$axios
+          .get(pa,)
+          .then(({data})=> {
+            console.log(data);
+            console.log("testcomment"+data);
+            this.comments=data['replies'];
+             console.log(this.comments.length);
+           
+
+
+        
+            // if (comments) {
+            //   for (let i = 0; i < comments.length; i++) {
+            //     comments[i]["open"] = false;
+            //     comments[i]["to_uid"] = comments[i]["from_uid"];
+            //     comments[i]["to_uname"] = comments[i]["from_uname"];
+            //   }
+            //   this.comments = comments;
+            // }
+          });
+     
     },
+
+
 
 
     },

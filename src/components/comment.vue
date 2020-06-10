@@ -1,7 +1,7 @@
 <template>
    <div class="page">
-      <!-- <div v-if="isSignIn===0" @click="signIn" class="signIn">登录留言吧~~</div>
-      <div v-else class="part part_input"> -->
+      <div v-if="user == null" @click="signIn" class="signIn">Sign In and Comment~~</div>
+      <div v-else class="part part_input">
       <div class="part part_input">
         <div class="input_top">
           <div class="img">
@@ -11,16 +11,18 @@
           <div class="text"><textarea v-model="submitTxt" class="textarea"></textarea></div>
         </div>
         <div class="input_down">
-          <a href="javascript:;" class="submit">submit</a>
+     
+          <a  href="javascript:;" @click="submit_new" class="submit">submit</a>
+        </div>
         </div>
       </div>
       <div v-if="comments.length>0" class="part part_output">
         <p class="output_header">全部评论 <span class="total">{{comments.length}}</span> 条</p>
         <div class="output_body">
-          <div v-for="(comment,index) in comments" :key="comment.id" class="floor">
+          <div v-for="  comment in comments" :key="comment.id" class="floor">
             <div class="floor_l">
               <!-- <img class="avatar" :src="comment.avatar!='null'?comment.avatar:imgDefault" alt=""> -->
-              <p class="from_uname">{{comment.from_uname}}</p></div>
+              <p class="from_uname">{{comment['poster'].username}}</p></div>
             <div class="floor_r">
               <div class="comment">
                 <div class="comment_main">{{comment.content}}</div>
@@ -28,10 +30,11 @@
                   <span class="date">{{comment.date}}</span>
                   <a href="javascript:;" class="replay_btn">回复</a>
                 </div>
-                <div v-if="comment.child.length>0" class="comment_replay__main">
+                
+             <!--   <div v-if="comment.child.length>0" class="comment_replay__main">
                   <div v-for="(replay,index2) in comment.child" :key="index2" class="comment_replay__floor">
                     <div class="floor_l">
-                      <!-- <img class="avatar" :src="replay.avatar!='null'?replay.avatar:imgDefault" alt=""> -->
+                      <img class="avatar" :src="replay.avatar!='null'?replay.avatar:imgDefault" alt="">
                       </div>
                     <div class="floor_r">
                       <p class="content">
@@ -40,13 +43,16 @@
                       </p>
                       <div class="footer">
                         <span class="date">{{replay.date}}</span>
-                        <!-- <a @click="setTextarea(index,true,replay.from_uid,replay.from_uname)" href="javascript:;" class="replay_btn">回复</a> -->
+                      <a @click="setTextarea(index,true,replay.from_uid,replay.from_uname)" href="javascript:;" class="replay_btn">回复</a> 
                       </div>
                     </div>
                   </div>
                 </div>
-                <div v-if="comment.open" class="comment_replay__bar">
-                  <textarea v-model.lazy="textArea[index]" :placeholder="`回复${comment.to_uname}：`" class="textarea"></textarea>
+                -->
+                
+                
+                <div  class="comment_replay__bar">
+                  <!-- <textarea v-model.lazy="textArea[index]" :placeholder="`回复${comment.to_uname}：`" class="textarea"></textarea> -->
                   <div class="down">
                     <!-- <a href="javascript:;" @click="setTextarea(index,false)" class="takeUp">收起↑</a>
                     <a href="javascript:;" @click="submit_reply(comment.id,comment.to_uid,comment.to_uname,textArea[index])" class="submit">发表</a> -->
@@ -64,12 +70,12 @@ export default {
   name: "comment",
   // list为父组件传过来的商品列表
   // isMore为是否显示“浏览更多”
-  props: ["comments", "articleId"],
+  props: ["comments", "productId"],
   data() {
 
     return {
       nickName: null,
-      avatar: null,
+      avatar: '',
       name: null,
       token: null,
       submitTxt: "",
@@ -78,8 +84,62 @@ export default {
     };
   },
   computed: {
+     user() {
+      return this.$store.state.user;
+    },
+
+       textArea() {
+      return this.comments.map(e => {
+        return null;
+      });
+    }
   },
   methods: {
+    
+
+      submit_new: function() {
+      //新发表评论
+    
+      console.log(this.$store.state.user.id);
+       console.log(this.productId);
+         console.log(this.submitTxt);
+         console.log(this.comments)
+
+      this.$axios
+        .post("/api/writeComment", {
+           userId: this.$store.state.user.id,
+           gameId:this.productId,
+           replyId:null,
+           content:this.submitTxt,
+           
+        })
+        .then(({data}) => {
+
+
+          // that.$message({
+          //   type: "success",
+          //   message: response.data.msg
+          // });
+          // if (response.data.status == 1) {
+          //   this.$emit("update");
+          // }
+        })
+        .catch(reject => {
+          console.log(reject);
+        });
+
+        //  console.log(this.productID)
+        //  var pa= "/api/getGameCommentById/"+this.productID;
+        // this.$axios
+        //   .get(pa,)
+        //   .then(({data})=> {
+        //     console.log(data);
+        //     console.log("testcomment"+data);
+        //     this.comments=data['replies'];
+        //      console.log(this.comments.length);  });
+        
+    },
+
   }
 };
 </script>

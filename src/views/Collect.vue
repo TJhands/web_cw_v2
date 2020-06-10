@@ -120,7 +120,7 @@ export default {
   height: 300px;
   padding: 0 0 130px 558px;
   margin: 65px 0 0;
-  background: ;
+  /* background: ; */
   color: #b0b0b0;
   overflow: hidden;
 }
