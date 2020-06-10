@@ -28,7 +28,7 @@
                 <div class="comment_main">{{comment.content}}</div>
                 <div class="comment_bar">
                   <span class="date">{{comment.date}}</span>
-                  <a href="javascript:;" class="replay_btn">回复</a>
+                  <!-- <a href="javascript:;" class="replay_btn">回复</a> -->
                 </div>
                 
              <!--   <div v-if="comment.child.length>0" class="comment_replay__main">

@@ -1,10 +1,10 @@
 <template>
    <div class="block" id="banner">
     <span class="demonstration"></span>
-    <el-carousel height="450px">
+    <el-carousel height="550px">
       <el-carousel-item v-for="item in img_list" :key="item">
         <!-- <img :src= "item.url" item alt=""  width=100%> -->
-         <img :src="require('../../static/img/'+item.url+'.png')" item alt=""  width=100%>
+        <img :src="require('../../static/img/'+item.url+'.jpg')" item alt=""  width=100%>
         
         <!-- <img src="../../static/img/p1.png" width=100%>
         <img src="../../static/img/p1.png" width=100%>
@@ -30,7 +30,7 @@
    <div class="goods" id="goods" name="goods" >
    <div class="nav">
       <div class="product-nav">
-        <div class="title">Game Categories</div>
+        <div class="title"></div>
         <el-tabs v-model="activeName" type="card">
           <el-tab-pane
             v-for="item in categoryList"
@@ -92,9 +92,9 @@
            
             // ],
 
-          img_list:[{url:'avatar'},
-          {url:'p1'},
-          {url:'p1'},
+          img_list:[{url:'top2'},
+          {url:'top1'},
+          {url:'top3'},
           
           ],
         // tableData:[]
