@@ -103,6 +103,9 @@ router.get("/getGameCommentById/:id", async (req,res) =>{
                         order: [['createAt','DESC']]
                     }
                 ],
+                where:{
+                    replyId: null
+                },
                 order: [['createAt','DESC']]
             }
         ]
