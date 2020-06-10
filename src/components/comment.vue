@@ -1,6 +1,6 @@
 <template>
    <div class="page">
-      <div v-if="user == null" @click="signIn" class="signIn">Sign In and Comment~~</div>
+      <div v-if="user == null" @click="signIn" class="signIn">Log In and Comment~~</div>
       <div v-else class="part part_input">
       <div class="part part_input">
         <div class="input_top">
@@ -137,7 +137,7 @@ export default {
         //     console.log("testcomment"+data);
         //     this.comments=data['replies'];
         //      console.log(this.comments.length);  });
-        
+        this.$router.go(0)
     },
 
   }

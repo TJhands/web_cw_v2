@@ -74,7 +74,7 @@ export default {
       productID: "9", // 商品id
       productDetails: "", // 商品详细信息
       productPicture: "" ,// 商品图片
-      likeC:"",
+      likeC:"Add to My Favorite",
       // cancelC:"Cancle from My Favorite",
       flag:"",
       allcomments:"",
@@ -197,14 +197,15 @@ export default {
 
       addCollect(val) {
         console.log(this.flag+'1');
+
        
       // 判断是否登录,没有登录则显示登录组件
-      // if (!this.$store.getters.getUser) {
-      //   this.$store.dispatch("setShowLogin", true);
-      //   return;
-      // }
+      if (this.$store.state.user==null) {
+         this.likeC="Log in and add to my favorite ";
+        return;
+      }
 
-      //console.log(val.target.innerText )
+      console.log(val.target.innerText )
        
   
       if(this.flag == true){ 
