@@ -105,6 +105,7 @@ export default {
   -webkit-transition: all 0.2s linear;
   transition: all 0.2s linear;
   position: relative;
+  list-style:none;
 }
 .myList ul li:hover {
   z-index: 2;
