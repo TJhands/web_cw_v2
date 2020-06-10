@@ -1,9 +1,9 @@
 <template>
   <div id="app">
     <nav id="nav"   >
-          <el-col :span="10">
+          <el-col :span="7">
         <div class="logo">
-           <svg    margin-left="15px" version="1.0" xmlns="http://www.w3.org/2000/svg"
+           <svg    margin-left="1px" version="1.0" xmlns="http://www.w3.org/2000/svg"
  width="60pt" height="60pt" viewBox="0 0 1273.000000 1280.000000">
 <g transform="translate(0.000000,1280.000000) scale(0.100000,-0.100000)"
 fill="freeze" stroke="none">
@@ -108,7 +108,7 @@ l-112 126 117 6 c435 21 799 250 1087 683 61 92 175 309 190 362 4 15 -26 -10
 
       <!-- <el-col :span="9">
       </el-col> -->
-      <el-col :span="14">
+      <el-col :span="17">
         <el-menu 
         default-active="activeIndex"
             class="el-menu-demo hidden-xs-only nav-pc"
@@ -218,7 +218,7 @@ nav {
   // flex-direction: row;
   // justify-content: space-between;
   // align-items: center;
-  padding: 16px 30px;
+  padding: 10px 20px;
   background-color: teal;
   // box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
   //  font-size: 1.2em;
@@ -230,8 +230,8 @@ nav {
   .left {
     // display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+    // justify-content: space-between;
+    // align-items: center;
     .brand {
       display: flex;
       flex-direction: row;
@@ -243,7 +243,7 @@ nav {
         color: white;
         // font-size: 1.5em;
         // font-weight: bold;
-        margin-left: 12px;
+        margin-left: 5px;
         width:100px;
       }
     }
@@ -271,7 +271,7 @@ nav {
     line-height: 40px;
     font-size: 22px;
     color:white;
-    margin-left: 50px;
+    margin-left: 5px;
   }
 .nav-pc {
     border-bottom: none;

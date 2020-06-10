@@ -1,6 +1,6 @@
 <template>
    <div class="block" id="banner">
-    <span class="demonstration">showgames</span>
+    <span class="demonstration"></span>
     <el-carousel height="450px">
       <el-carousel-item v-for="item in img_list" :key="item">
         <!-- <img :src= "item.url" item alt=""  width=100%> -->
@@ -69,8 +69,7 @@
   </div>
    </el-row>
    <el-row>
-    <router-link 
-     to="/categories">See More</router-link>
+    <router-link  to="/categories">See More</router-link>
     </el-row>
 
 

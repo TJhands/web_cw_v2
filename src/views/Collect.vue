@@ -20,10 +20,11 @@
       </div>
       <!-- 收藏列表为空的时候显示的内容 -->
       <div v-else class="collect-empty">
-        <div class="empty">
+        <h2>Your Collection Is Empty</h2>
+        <!-- <div class="empty">
           <h2>您的收藏还是空的！</h2>
           <p>快去购物吧！</p>
-        </div>
+        </div> -->
       </div>
       <!--  收藏列表为空的时候显示的内容END -->
     </div>
@@ -36,16 +37,48 @@ export default {
       collectList: []
     };
   },
+
+   created() {
+       
+        this.getcollect();
+        
+
+        // this.productID = 7
+    
+  },  
+  methods: {
+    getcollect(){
+      console.log(this.$store.state.user.id);
+       this.$axios
+      .post("/api/getFavoriteGamesByUser", {
+        userId: this.$store.state.user.id,
+      })
+      .then(({data})=> {
+        // if (res.data.code === "001") {
+          this.collectList = data;
+          console.log(data)
+        // }
+      })
+      .catch(err => {
+        return Promise.reject(err);
+      });
+
+
+    }
+
+
+  },
   activated() {
     // 获取收藏数据
     this.$axios
-      .post("/api/user/collect/getCollect", {
-        user_id: this.$store.getters.getUser.user_id
+      .post("/api/getFavoriteGamesByUser", {
+        userId: this.$store.state.user.id,
       })
-      .then(res => {
-        if (res.data.code === "001") {
-          this.collectList = res.data.collectList;
-        }
+      .then(({data})=> {
+        // if (res.data.code === "001") {
+          this.collectList = data;
+          console.log(data)
+        // }
       })
       .catch(err => {
         return Promise.reject(err);
