@@ -11,7 +11,7 @@
           <div class="text"><textarea v-model="submitTxt" class="textarea"></textarea></div>
         </div>
         <div class="input_down">
-          
+
           <a  href="javascript:;" @click="submit_new" class="submit">submit</a>
         </div>
         </div>
@@ -30,27 +30,9 @@
                   <span class="date">{{comment.date}}</span>
                   <!-- <a href="javascript:;" class="replay_btn">回复</a> -->
                 </div>
-                
-             <!--   <div v-if="comment.child.length>0" class="comment_replay__main">
-                  <div v-for="(replay,index2) in comment.child" :key="index2" class="comment_replay__floor">
-                    <div class="floor_l">
-                      <img class="avatar" :src="replay.avatar!='null'?replay.avatar:imgDefault" alt="">
-                      </div>
-                    <div class="floor_r">
-                      <p class="content">
-                        <span class="from_name">{{replay.from_uname}}</span>回复<span class="to_name">{{replay.to_uname}}</span> ：
-                        {{replay.content}}
-                      </p>
-                      <div class="footer">
-                        <span class="date">{{replay.date}}</span>
-                      <a @click="setTextarea(index,true,replay.from_uid,replay.from_uname)" href="javascript:;" class="replay_btn">回复</a> 
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                -->
-                
-                
+
+
+
                 <div  class="comment_replay__bar">
                   <!-- <textarea v-model.lazy="textArea[index]" :placeholder="`回复${comment.to_uname}：`" class="textarea"></textarea> -->
                   <div class="down">
@@ -95,11 +77,11 @@ export default {
     }
   },
   methods: {
-    
+
 
       submit_new: function() {
       //新发表评论
-    
+
       console.log(this.$store.state.user.id);
        console.log(this.productId);
          console.log(this.submitTxt);
@@ -111,32 +93,15 @@ export default {
            gameId:this.productId,
            replyId:null,
            content:this.submitTxt,
-           
+
         })
         .then(({data}) => {
 
-
-          // that.$message({
-          //   type: "success",
-          //   message: response.data.msg
-          // });
-          // if (response.data.status == 1) {
-          //   this.$emit("update");
-          // }
         })
         .catch(reject => {
           console.log(reject);
         });
 
-        //  console.log(this.productID)
-        //  var pa= "/api/getGameCommentById/"+this.productID;
-        // this.$axios
-        //   .get(pa,)
-        //   .then(({data})=> {
-        //     console.log(data);
-        //     console.log("testcomment"+data);
-        //     this.comments=data['replies'];
-        //      console.log(this.comments.length);  });
         this.$router.go(0)
     },
 
@@ -203,7 +168,7 @@ export default {
           width: 100px;
           height: 50px;
           line-height: 50px;
-          background: rgba(0, 0, 0, 0.2);
+            background-color: #409EFF;
           text-align: center;
           border-radius: 6px;
           color: #fff;
