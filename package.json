@@ -13,7 +13,7 @@
     "connect-session-sequelize": "^6.1.1",
     "core-js": "^3.6.4",
     "element-ui": "^2.13.2",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "express-session": "^1.17.0",
     "morgan": "^1.9.1",
     "passport": "^0.4.1",
